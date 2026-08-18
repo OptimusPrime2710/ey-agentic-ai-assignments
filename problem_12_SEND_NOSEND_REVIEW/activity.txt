@@ -1,0 +1,20 @@
+ACCOUNT ACTIVITY EXTRACT
+Client name: Jordan Lee
+Statement period: 2026-07-01 through 2026-07-31
+Account: Premier Checking (ending 4821)
+Opening balance: $12,480.55
+Closing balance: $9,875.20
+Total inflows: $8,200.00
+Total outflows: $10,805.35
+Transactions:
+2026-07-02 | Payroll deposit | +$4,100.00 | Premier Checking
+2026-07-08 | Transfer from savings | +$2,500.00 | Premier Checking
+2026-07-11 | Rent payment | -$2,250.00 | Premier Checking
+2026-07-15 | Card purchase at Northstar Travel | -$3,450.00 | Premier Checking
+2026-07-18 | Utility payment | -$185.35 | Premier Checking
+2026-07-22 | Payroll deposit | +$1,600.00 | Premier Checking
+2026-07-25 | Monthly maintenance fee | -$12.00 | Premier Checking
+2026-07-29 | Credit card payment missed | $0.00 | Premier Checking
+Fees: $12.00 monthly maintenance fee charged on 2026-07-25
+Product usage: Premier Checking; savings transfer received on 2026-07-08
+Sensitive item: $3,450.00 card debit at Northstar Travel on 2026-07-15; a credit card payment was missed on 2026-07-29.

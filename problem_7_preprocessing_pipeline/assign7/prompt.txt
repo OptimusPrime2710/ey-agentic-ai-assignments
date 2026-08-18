@@ -1,0 +1,30 @@
+Write a Python program that accepts exactly 3 sentences from the user and preprocesses them using a preprocess() function.
+
+Requirements:
+
+Ask the user to enter three sentences, one at a time.
+Ask the user whether stopword removal should be enabled:
+yes → remove stopwords
+no → keep stopwords
+Ask the user whether lemmatization should be enabled:
+yes → apply lemmatization
+no → do not apply lemmatization
+Create a function:
+preprocess(text, remove_stopwords=False, lemmatize=False)
+
+The function should:
+Convert text to lowercase.
+Tokenize the text.
+Remove punctuation/special characters where appropriate.
+Remove stopwords only when remove_stopwords=True.
+Apply lemmatization only when lemmatize=True.
+Return the processed text.
+Use a standard NLP library such as NLTK and include all necessary imports.
+Handle required NLTK resources gracefully, explaining what the user needs to download if they are missing.
+Process all three sentences using the same preprocessing settings selected by the user.
+Display both the original sentence and its preprocessed result for each of the three sentences.
+Keep the code beginner-friendly, well-commented, and runnable as a standalone Python script.
+Do not use a GUI; use the command line for all user input and output.
+Include basic input validation for the yes/no choices.
+
+Return only the complete Python code, with no additional explanation.
