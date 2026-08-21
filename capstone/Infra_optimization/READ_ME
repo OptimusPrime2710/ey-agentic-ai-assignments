@@ -1,0 +1,7 @@
+
+
+
+# HOW TO RUN capstone agent-goal
+## > workflow-agent "create a bike manufacturing company "
+## > workflow-agent "create a bike manufacturing company " --output html > bike_manufacturing.html
+## >  workflow-agent --file .\infra_optimization.md --output html > infra_optimization.html   
