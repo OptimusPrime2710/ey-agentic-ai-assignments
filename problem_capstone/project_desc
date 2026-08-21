@@ -1,0 +1,93 @@
+
+
+17. Cloud Cost, Performance &amp; Capacity Optimization Agent
+
+
+Create an infrastructure optimization agent that reviews cloud spend, utilization, scaling policies, idle
+resources, database performance, container metrics, storage growth, and service-level objectives. The
+agent should recommend rightsizing, scheduling, autoscaling, reserved-capacity options, and performance
+tuning actions with business-impact explanations. Bonus: propose changes as infrastructure-as-code pull
+requests for platform team review.
+Objective: Balance technology cost, performance, and resilience by continuously optimizing the cloud and
+platform estate.
+Learning takeaways: FinOps analytics, capacity planning, SLO-based optimization, infrastructure-as-code
+generation, cloud telemetry analysis, performance bottleneck detection, and approval-based automation.
+
+
+
+Goals : 
+1. get cloud infra details - ( planning seperate agents as we can get various cloud/ on-premise / hybrid data )
+    instances , type, services, databases, gateways 
+
+key success criteria - 
+    - Able to successfully get all resource details - memory, cpu utilization, infra high level architect diagram
+    - able to see high level infra details with utlization for resources 
+    - cost report from providers / ( get on premise infra cost from business )
+
+2. create cloud infra report - 
+    spend,
+    utilization, 
+    scaling policies,
+    idle
+
+key success criteria - 
+    - create a uniform report with different component its cost and respective parameter
+    - Ex    server1 - cpu utilization - requests serving - upstream and downstream - cost
+    -       db1 - memory - connections - upstreams - cost 
+    -       severless service lambda - upstream & downstream - cost 
+
+3. analyze report (with suggestion) and suggest - rightsizing, scheduling, autoscaling, reserved-capacity options, and performance
+
+key success criteria - 
+    - suggested action - implemented 
+    - Yellow Report underutilized resorced < 30% capacity
+    - Red Report overutilized resource > 85% capacity
+    - Green Report with what is working well. like DB have right backups and working on optimized capacity
+    - high level arch diagram with bottlenecks, and components based on above Yellow / Red / Green  
+    - Technical Suggestion Report - which component can be scaled up / scaled down ( Hz or Vt )
+
+
+4. Analyze suggestions with business impact.
+
+key success criteria - 
+    - Business Suggestion Report -  component improvement and forecast cost and its business impact
+
+
+5. Request for team review. (human in loop or agent behave as business expertise)
+
+key success criteria - 
+    - review comments - like cost is too high server 1 upscaling and its low crtical applications 
+
+
+6. Analyze the review comment redo step 3. (ReAct part maybe not more than 3 times - exit condition)
+
+key success criteria - 
+    - Report with actions - 
+    - serve1 needs upscaling but not higly critical application
+    - server 3 needs downscaling 
+
+
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+
+
+
+AWS Infra 
+login 
+check servers and its utilization 
+check database and create database utilization 
+check services and usage 
+Example : 
+- server 1 - EC2 instance 30% utilization - upstream (server0) - downstream(server3, dabase1)
+server0 - AWS Gateway 50% - upstream () downstream(server1) 
+server3 - lambda function 60% - upstream(server1) - downstream(s3) 
+database1 - RDS - 50GB/200GB - upstream(server1,server2) downstream()
+server2 - EC2 low cost - 90% - upstream(server0) downstream(database1)
+
+
+

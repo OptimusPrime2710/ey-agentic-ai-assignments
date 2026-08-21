@@ -1,0 +1,203 @@
+
+Goals : 
+1. get cloud infra details - ( planning seperate agents as we can get various cloud/ on-premise / hybrid data )
+    instances , type, services, databases, gateways 
+
+key success criteria - 
+    - Able to successfully get all resource details - memory, cpu utilization, infra high level architect diagram
+    - able to see high level infra details with utlization for resources 
+    - cost report from providers / ( get on premise infra cost from business )
+
+Manual steps : 
+AWS Infra 
+login 
+check servers and its utilization 
+check database and create database utilization 
+check services and usage 
+
+
+similarly get it from GCP 
+For on premise get report from businesses 
+
+
+2. create cloud infra report - 
+    spend,
+    utilization, 
+    scaling policies,
+    idle
+
+key success criteria - 
+    - create a uniform report with different component its cost and respective parameter
+    - Ex    server1 - cpu utilization - requests serving - upstream and downstream - cost
+    -       db1 - memory - connections - upstreams - cost 
+    -       severless service lambda - upstream & downstream - cost 
+
+    
+Manual steps : 
+Create Generic Report for processing  : 
+server 1 (500$ / month ) -  AWS EC2 instance 30% utilization - upstream (server0) - downstream(server3, dabase1)
+server0 (300$ / month )  - AWS Gateway 50% - upstream () downstream(server1) 
+server3 (600$ / month )  - lambda function 50tps - upstream(server1) - downstream(s3) 
+database1 (40$ / month )  - RDS - 50GB/200GB - upstream(server1,server2) downstream()
+server2 (100$ / month )  - on premise linux - 90% - upstream(server0) downstream(database1)
+
+
+3. analyze report (with suggestion) and suggest - rightsizing, scheduling, autoscaling, reserved-capacity options, and performance
+
+key success criteria - 
+    - suggested action - implemented 
+    - Yellow Report underutilized resorced < 30% capacity
+    - Red Report overutilized resource > 85% capacity
+    - Green Report with what is working well. like DB have right backups and working on optimized capacity
+    - high level arch diagram with bottlenecks, and components based on above Yellow / Red / Green  
+    - Technical Suggestion Report - which component can be scaled up / scaled down ( Hz or Vt )
+
+Manual steps :
+Action - No action right now
+Suggestions - No suggestions right now 
+    - Yellow Report - server1, 
+    - Red Report - server2
+    - Green Report - server0, server3, dabase1
+    - server0 --> server1 -----------------------> server3
+                          --> database1
+              --> server2 --> database1
+
+    - Technical Suggestion Report - 
+        - server2 hz upscaling 
+        - database can be bottleneck - seconadry database backup 
+        - server1 hz downscaling 
+
+Manual steps 2:
+Action - database can be bottleneck - seconadry database backup v - completed 
+
+Suggestions -  server2 is not critical do not upscale if utilization not more than 95%
+    - Yellow Report - server1, 
+    - Red Report - server2
+    - Green Report - server0, server3, dabase1, database2
+    - server0 --> server1 -----------------------> server3
+                          --> database1 ---> database2
+              --> server2 --> database1 ----> database2
+
+    - Technical Suggestion Report - 
+        - server1 hz downscaling 
+
+
+4. Analyze suggestions with business impact.
+
+key success criteria - 
+    - Business Suggestion Report -  component improvement and forecast cost and its business impact
+
+Manual steps :  
+    Business Suggestions - server2 is not critical do not upscale if utilization not more than 95%
+Manual steps 2 :  
+
+5. Request for team review. (human in loop or agent behave as business expertise)
+
+key success criteria - 
+    - review comments - like cost is too high server 1 upscaling and its low crtical applications 
+
+Manual steps :
+based on 
+    - Technical Suggestion Report - 
+        - server2 hz upscaling 
+        - database can be bottleneck - seconadry database backup 
+        - server1 hz downscaling 
+     Business Suggestion Report -  server2 is not critical do not upscale if utilization not more than 95%
+===================================================================================
+        - server2 hz upscaling - Not needed as per business x 
+        - database can be bottleneck - seconadry database backup v
+        - server1 hz downscaling - Not needed as only 1 server x 
+
+Manual steps2 :
+based on 
+    - Technical Suggestion Report - 
+        - server1 hz downscaling 
+     Business Suggestion Report -  
+===================================================================================
+        - server1 hz downscaling - Not needed as only 1 server x 
+
+
+6. Analyze the review comment redo step 3. (ReAct part maybe not more than 3 times - exit condition)
+
+key success criteria - 
+    - Report with actions - 
+    - serve1 needs upscaling but not higly critical application
+    - server 3 needs downscaling 
+
+Manual Steps -  database can be bottleneck - seconadry database backup v
+send to step 3 
+Manual Steps 2  -  No action needed 
+Exit 
+
+
+
+Tools Required to achieve your goal -
+===============================================================================================
+EX; 1 : AWS , GCP, on premise 
+
+
+get_infrasture_resources(infraid: str, credentials : Credentials, type: str) : List<Resources>
+get_resource_details(resouceid : str) : ResourceUtilizationDetails
+create_resource_details(infraid : str) : List<ResourceUtilizationDetails>
+user_comment_based_modification(userComments: List<str>, changeplan: List<ResourceChangeDetails>) : List<ResourceChangeDetails>
+modify_resource_details(resourceId: str, resourceChangeDetails : ResourceChangeDetails) : PRLink
+
+New Tools suggested ----------> 
+==========================================================================================================
+==========================================================================================================
+
+get_infrastructure_resources(infraId, credentials, type)
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Inventory and ownership/topology.
+get_resource_telemetry(resourceIds, timeRange)
+
+CPU, memory, network, I/O, container and database metrics.
+get_cost_details(infraId, resourceIds, timeRange)
+
+Spend, forecast, unit economics, commitment utilization and allocation.
+get_slo_details(serviceIds, timeRange)
+
+Availability, latency, error rate, error budget and SLO targets.
+get_scaling_and_capacity_details(resourceIds, timeRange)
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Autoscaling configuration, traffic, capacity, saturation and historical scaling behavior.
+analyze_optimization_opportunities(...)
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Produces opportunities such as rightsizing, idle-resource removal, scheduling, storage lifecycle, DB tuning and commitment optimization.
+create_change_plan(opportunities, constraints, userComments)
+
+Converts recommendations into concrete proposed changes while respecting business/SLO constraints.
+validate_change_plan(changePlan)
+
+Checks policy, dependencies, blast radius, estimated savings, performance impact and resilience risk.
+generate_iac_change(changePlan)
+
+Generates Terraform/CloudFormation/Kubernetes/etc. changes.
+create_change_pr(change)
+
+Creates the PR for platform-team approval.
+verify_change(changeId, validationWindow)
+Measures whether the change actually improved cost/performance without violating SLOs.
+
+==========================================================================================================
+==========================================================================================================
+
+
+//get_technical_analysis_report(resouceDetailsReport : List<ResourceDetails>)
+//get_business_analysis_report(techAnalysisReport: TechAnalysisReport)
+//get_human_in_loop 
+-->  List<ResourceChangeDetails
+
+user_comment_based_modification(userComments: List<str>, changeplan: List<ResourceChangeDetails>) : List<ResourceChangeDetails>
+modify_resource_details(resourceId: str, resourceChangeDetails : ResourceChangeDetails) : PRLink
+
+
+
+
